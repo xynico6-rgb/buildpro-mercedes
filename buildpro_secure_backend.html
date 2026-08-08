@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BuildPro Solutions — Construction Sales Command Center</title>
+<style>
+:root{
+  --navy:#10243b; --navy2:#18334f; --ink:#17202b; --muted:#66717d;
+  --orange:#f28a22; --orange2:#ff9f32; --cream:#f6f5f1; --line:#dfe3e7;
+  --green:#2f8a55; --white:#fff; --shadow:0 18px 45px rgba(16,36,59,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:#f7f8f9}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.container{width:min(1180px,calc(100% - 40px));margin:auto}
+.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:30}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.02em}
+.brand-mark{width:40px;height:40px;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:950;clip-path:polygon(18% 0,82% 0,100% 18%,100% 82%,82% 100%,18% 100%,0 82%,0 18%)}
+.brand small{display:block;color:#7a858f;font-weight:600;font-size:11px;letter-spacing:.06em;margin-top:2px}
+.navlinks{display:flex;gap:25px;color:#53606d;font-size:14px;font-weight:700}
+.navlinks a:hover{color:var(--orange)}
+.nav-cta{background:var(--navy);color:#fff;border:0;border-radius:6px;padding:11px 17px;font-weight:800}
+.hero{background:var(--navy);color:#fff;min-height:510px;display:grid;grid-template-columns:1.02fr .98fr;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-150px;top:-180px;width:540px;height:540px;border:70px solid rgba(242,138,34,.12);transform:rotate(14deg)}
+.hero-copy{padding:82px 0 72px}
+.eyebrow{color:var(--orange2);font-weight:900;letter-spacing:.16em;font-size:12px;text-transform:uppercase}
+h1{font-size:clamp(42px,5.4vw,70px);line-height:.98;letter-spacing:-.055em;margin:16px 0 22px;max-width:650px}
+.hero p{font-size:18px;line-height:1.6;color:#d6e0ea;max-width:600px}
+.hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.btn{border:0;border-radius:6px;padding:13px 18px;font-weight:850;display:inline-flex;align-items:center;gap:9px}
+.btn-primary{background:var(--orange);color:#fff}
+.btn-primary:hover{background:var(--orange2)}
+.btn-light{background:#fff;color:var(--navy)}
+.hero-photo{position:relative;min-height:510px}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.95)}
+.hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--navy) 0%,rgba(16,36,59,.18) 35%,rgba(16,36,59,0) 70%)}
+.section{padding:70px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}
+.kicker{color:var(--orange);font-weight:900;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+h2{font-size:36px;letter-spacing:-.04em;margin:7px 0 0}
+.sub{color:var(--muted);max-width:620px;line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-38px;position:relative;z-index:5}
+.stat{background:#fff;border:1px solid var(--line);padding:22px 23px;box-shadow:var(--shadow)}
+.stat .num{font-size:32px;font-weight:900;color:var(--navy)}
+.stat .label{font-size:13px;color:var(--muted);margin-top:4px}
+.workflows{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);box-shadow:0 8px 26px rgba(16,36,59,.06)}
+.workflow{padding:25px;display:flex;flex-direction:column;min-height:340px;position:relative;overflow:hidden}
+.workflow:before{content:"";position:absolute;right:-45px;top:-45px;width:120px;height:120px;border:22px solid rgba(242,138,34,.11);transform:rotate(45deg)}
+.number{font-weight:950;color:var(--orange);font-size:12px;letter-spacing:.12em}
+.workflow h3{font-size:22px;margin:10px 0 8px}
+.workflow p{color:var(--muted);line-height:1.55;font-size:14px}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 22px}
+.step{font-size:11px;font-weight:800;color:#53606d;border:1px solid #d9dee3;padding:6px 8px;background:#fafbfb}
+.workflow .btn{margin-top:auto;justify-content:center}
+.dashboard{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.panel-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panel-head h3{margin:0;font-size:18px}
+.status{font-size:12px;font-weight:800;color:var(--green);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.agent-shell{display:grid;grid-template-columns:270px 1fr;min-height:560px}
+.agent-menu{background:var(--navy);color:#fff;padding:22px}
+.agent-menu h3{margin:0 0 6px}
+.agent-menu p{font-size:12px;color:#b8c5d2;line-height:1.5}
+.agent-btn{width:100%;text-align:left;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;padding:12px;border-radius:5px;margin-top:9px;font-weight:750}
+.agent-btn:hover,.agent-btn.active{background:var(--orange);border-color:var(--orange)}
+.agent-main{display:flex;flex-direction:column;background:#f7f8f9}
+.agent-head{padding:18px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.agent-title{display:flex;gap:11px;align-items:center}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:900}
+.agent-title strong{display:block}.agent-title span{font-size:11px;color:#7b858f}
+.chat{flex:1;padding:22px;overflow:auto;min-height:330px;max-height:390px}
+.msg{max-width:78%;padding:13px 15px;border-radius:7px;margin-bottom:12px;font-size:13px;line-height:1.55;white-space:pre-wrap}
+.msg.bot{background:#fff;border:1px solid #e0e4e7}
+.msg.user{margin-left:auto;background:var(--navy);color:#fff}
+.msg.typing{background:#fff;border:1px solid #e0e4e7;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+.composer{display:flex;gap:9px;padding:14px;background:#fff;border-top:1px solid var(--line)}
+.composer input{flex:1;border:1px solid #d7dce1;border-radius:6px;padding:12px 13px;outline:none}
+.composer input:focus{border-color:var(--orange)}
+.send{border:0;background:var(--orange);color:#fff;border-radius:6px;width:46px;font-weight:900}
+.footer{background:var(--navy);color:#c5d0db;padding:35px 0}
+.footer-row{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.footer strong{color:#fff}
+.error-banner{background:#fee;border-left:4px solid #c33;padding:12px;margin:10px 0;border-radius:4px;color:#333;font-size:12px}
+
+@media(max-width:900px){
+ .hero{grid-template-columns:1fr}.hero-copy{padding:65px 0 35px}.hero-photo{min-height:330px}.stats{grid-template-columns:repeat(2,1fr);margin-top:20px}
+ .workflows{grid-template-columns:1fr}.agent-shell{grid-template-columns:1fr}.agent-menu{display:none}.topbar{padding:0 20px}.section{padding:50px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<header class="topbar">
+  <div class="container nav">
+    <div class="brand">
+      <div class="brand-mark">BP</div>
+      <div><strong>BuildPro</strong><small>Sales Command Center</small></div>
+    </div>
+    <div class="navlinks">
+      <a href="#workflows">Workflows</a>
+      <a href="#results">Results</a>
+      <a href="#agent">Mercedes AI</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">Construction Sales Automation</div>
+    <h1>Sales workflows that scale with your team.</h1>
+    <p>From daily prospecting to automated follow-ups and instant response routing. 80% less admin work. Real-time pipeline visibility. Your team focuses on selling.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="document.getElementById('agent').scrollIntoView({behavior:'smooth'})">Ask Mercedes</button>
+      <button class="btn btn-light">Learn more</button>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" alt="">
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="section container" style="padding-bottom:20px">
+  <div class="stats">
+    <div class="stat">
+      <div class="num" id="prospects">24</div>
+      <div class="label">Prospects identified</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="sent">18</div>
+      <div class="label">Outreach sent</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="followups">7</div>
+      <div class="label">Follow-ups queued</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="replies">5</div>
+      <div class="label">Replies received</div>
+    </div>
+  </div>
+</section>
+
+<!-- Workflows -->
+<section class="section container" id="workflows">
+  <div class="section-head">
+    <div><div class="kicker">Three Core Workflows</div><h2>End-to-end sales operations.</h2></div>
+  </div>
+  <div class="workflows">
+    <div class="card workflow">
+      <div class="number">1. DAILY PROSPECTING</div>
+      <h3>30-45 min setup</h3>
+      <p>Automatically identify, personalize, and contact qualified construction prospects every morning.</p>
+      <div class="steps">
+        <span class="step">Schedule</span>
+        <span class="step">Filter</span>
+        <span class="step">Personalize</span>
+        <span class="step">Send</span>
+      </div>
+      <button class="btn btn-primary" onclick="scrollToAgent()">Learn more</button>
+    </div>
+    <div class="card workflow">
+      <div class="number">2. FOLLOW-UP SEQUENCE</div>
+      <h3>25-35 min setup</h3>
+      <p>Escalate with precision. Three-touch sequence automatically excludes those who replied.</p>
+      <div class="steps">
+        <span class="step">Search</span>
+        <span class="step">Filter</span>
+        <span class="step">Escalate</span>
+        <span class="step">Log</span>
+      </div>
+      <button class="btn btn-primary" onclick="scrollToAgent()">Learn more</button>
+    </div>
+    <div class="card workflow">
+      <div class="number">3. RESPONSE HANDLER</div>
+      <h3>20-30 min setup</h3>
+      <p>Instant. AI classifies incoming replies and routes to your sales team in real time.</p>
+      <div class="steps">
+        <span class="step">Watch email</span>
+        <span class="step">Classify</span>
+        <span class="step">Route</span>
+        <span class="step">Notify</span>
+      </div>
+      <button class="btn btn-primary" onclick="scrollToAgent()">Learn more</button>
+    </div>
+  </div>
+</section>
+
+<!-- Mercedes AI Agent -->
+<section class="section container" id="agent" style="padding-top:15px">
+  <div class="section-head">
+    <div><div class="kicker">Mercedes AI</div><h2>Your sales coordination assistant.</h2></div>
+    <div class="sub">Click an action below or type a question. Mercedes runs via secure Make.com automation.</div>
+  </div>
+  <div class="panel agent-shell">
+    <aside class="agent-menu">
+      <h3>Mercedes</h3>
+      <p>BuildPro Solutions · Sales AI</p>
+      <button class="agent-btn" data-action="prospects" onclick="quickAction('prospects',this)">⌕ Research a prospect</button>
+      <button class="agent-btn" data-action="outreach" onclick="quickAction('outreach',this)">✉ Create outreach</button>
+      <button class="agent-btn" data-action="followup" onclick="quickAction('followup',this)">↻ Follow up strategy</button>
+      <button class="agent-btn" data-action="reply" onclick="quickAction('reply',this)">✓ Analyze reply</button>
+      <button class="agent-btn" data-action="ask" onclick="quickAction('ask',this)">? Ask Mercedes</button>
+    </aside>
+    <div class="agent-main">
+      <div class="agent-head">
+        <div class="agent-title"><div class="avatar">M</div><div><strong>Mercedes AI</strong><span>Online · Connected to Make.com</span></div></div>
+        <span class="status" id="status"><i class="dot"></i> Ready</span>
+      </div>
+      <div class="chat" id="chat">
+        <div class="msg bot">Hi, I'm Mercedes. 👋<br>I'm here to help you set up and execute BuildPro's three sales automation workflows. Choose an action on the left, or tell me what you need to accomplish.</div>
+      </div>
+      <form class="composer" onsubmit="sendMessage(event)">
+        <input id="chatInput" autocomplete="off" placeholder="Ask Mercedes about prospects, outreach, follow-ups, or replies…">
+        <button class="send" aria-label="Send">➤</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-row">
+    <div><strong>BUILDPRO SOLUTIONS</strong><br><small>Construction sales & marketing automation</small></div>
+    <div><small>Mercedes AI · Powered by Make.com + Claude</small></div>
+  </div>
+</footer>
+
+<script>
+// ===== CONFIGURATION =====
+// ⬇️ REPLACE WITH YOUR BACKEND ENDPOINT ⬇️
+// Examples of backend endpoints (webhook URL is hidden here):
+// Vercel: https://yourproject.vercel.app/api/webhook
+// Netlify: https://yoursite.netlify.app/api/mercedes
+// Heroku: https://yourproject.herokuapp.com/api/webhook
+// Replit: https://YourUsername--ProjectName.replit.dev/api/webhook
+
+const BACKEND_ENDPOINT = 'https://YOUR_BACKEND_URL_HERE/api/webhook';
+
+// ===== DOM REFERENCES =====
+const chat = document.getElementById('chat');
+const input = document.getElementById('chatInput');
+const statusDot = document.getElementById('status');
+let stats = {prospects:24,sent:18,followups:7,replies:5};
+
+// ===== UTILITY FUNCTIONS =====
+function scrollToAgent(){document.getElementById('agent').scrollIntoView({behavior:'smooth'});}
+
+function updateStatus(status, isOnline = true){
+  const dot = isOnline ? '<i class="dot"></i>' : '';
+  statusDot.innerHTML = dot + ' ' + status;
+  statusDot.style.color = isOnline ? 'var(--green)' : '#f28a22';
+}
+
+function addMsg(text, who='bot'){
+  const el = document.createElement('div');
+  el.className = 'msg ' + who;
+  el.textContent = text;
+  chat.appendChild(el);
+  chat.scrollTop = chat.scrollHeight;
+  return el;
+}
+
+function addTypingIndicator(){
+  const el = document.createElement('div');
+  el.className = 'msg typing';
+  el.textContent = 'Mercedes is thinking…';
+  el.id = 'typing-indicator';
+  chat.appendChild(el);
+  chat.scrollTop = chat.scrollHeight;
+  return el;
+}
+
+function removeTypingIndicator(){
+  const typing = document.getElementById('typing-indicator');
+  if(typing) typing.remove();
+}
+
+// ===== BACKEND INTEGRATION (SECURE) =====
+async function callMercedes(actionOrMessage, isQuickAction = false){
+  // Check if backend endpoint is configured
+  if(BACKEND_ENDPOINT.includes('YOUR_BACKEND_URL')){
+    addMsg('⚠️ Backend endpoint not configured. Please update BACKEND_ENDPOINT in the HTML with your server URL.', 'bot');
+    console.warn('Backend URL not set. Update BACKEND_ENDPOINT constant.');
+    return;
+  }
+  
+  updateStatus('Thinking...', true);
+  addTypingIndicator();
+  
+  try {
+    // Prepare payload
+    const payload = isQuickAction 
+      ? { action: actionOrMessage, timestamp: new Date().toISOString(), source: 'buildpro-website' }
+      : { action: 'ask', message: actionOrMessage, timestamp: new Date().toISOString(), source: 'buildpro-website' };
+    
+    // Call your BACKEND endpoint (not Make directly)
+    // The webhook URL stays hidden on your server
+    const response = await fetch(BACKEND_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    
+    const data = await response.json();
+    removeTypingIndicator();
+    
+    const botResponse = data.response || data.message || 'I received your request. How would you like to proceed?';
+    addMsg(botResponse, 'bot');
+    updateStatus('Ready', true);
+    
+  } catch (error) {
+    console.error('Backend error:', error);
+    removeTypingIndicator();
+    addMsg(`Error: ${error.message}. Check your backend connection.`, 'bot');
+    updateStatus('Connection error', false);
+  }
+}
+
+// ===== CHAT INTERFACE =====
+async function sendMessage(e){
+  e.preventDefault();
+  const text = input.value.trim();
+  if(!text) return;
+  
+  addMsg(text, 'user');
+  input.value = '';
+  input.focus();
+  
+  await callMercedes(text, false);
+}
+
+async function quickAction(action, btn){
+  document.querySelectorAll('.agent-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  
+  const labels = {
+    prospects: 'Research a prospect',
+    outreach: 'Create outreach',
+    followup: 'Follow up strategy',
+    reply: 'Analyze reply',
+    ask: 'Ask Mercedes'
+  };
+  
+  addMsg(labels[action] || 'Tell me what you need', 'user');
+  await callMercedes(action, true);
+}
+
+// Initialize
+console.log('🚀 BuildPro Mercedes AI loaded');
+console.log('Backend endpoint:', BACKEND_ENDPOINT);
+if(BACKEND_ENDPOINT.includes('YOUR_BACKEND_URL')){
+  console.warn('⚠️ Backend URL not configured. Mercedes will not work until you set BACKEND_ENDPOINT.');
+  addMsg('⚠️ System not configured. Please ask the admin to set up the backend endpoint.', 'bot');
+}
+</script>
+</body>
+</html>
